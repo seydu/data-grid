@@ -6,5 +6,5 @@ namespace Seydu\DataGrid;
 
 interface ListRendererInterface
 {
-    public function render(ListInterface $list, $options);
+    public function render(GridInterface $grid, $views, $data);
 }
