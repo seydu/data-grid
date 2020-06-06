@@ -4,8 +4,6 @@
 namespace Seydu\DataGrid;
 
 
-use Seydu\DataQueryFilter\SortDefinitionInterface;
-
 interface ListDataProviderInterface
 {
     /**
@@ -16,49 +14,10 @@ interface ListDataProviderInterface
     /**
      * @return int
      */
-    public function getCurrentPage();
-
-    /**
-     * @return boolean
-     */
-    public function haveToPaginate();
+    public function getTotalSize();
 
     /**
      * @return int
      */
-    public function count();
-
-    /**
-     * @return array
-     */
-    public function getNormalizedFilterData();
-
-    /**
-     * @return boolean
-     */
-    public function isMaxPerPageSet();
-
-    /**
-     * @param int $maxPerPage
-     * @return $this
-     */
-    public function setMaxPerPage($maxPerPage);
-
-    /**
-     * @param array $definitions
-     * @return $this
-     */
-    public function setFilterDefinitions(array $definitions);
-
-    /**
-     * @param array $data
-     * @return $this
-     */
-    public function setFilterData(array $data);
-
-    /**
-     * @return SortDefinitionInterface
-     */
-    public function getSortDefinition();
-
+    public function getDataSize();
 }
