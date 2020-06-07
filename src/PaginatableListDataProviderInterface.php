@@ -12,4 +12,5 @@ interface PaginatableListDataProviderInterface extends ListDataProviderInterface
      * @return iterable
      */
     public function getPageData(int $currentPage, int $itemsPerPage) ;
+
 }
