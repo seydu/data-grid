@@ -12,7 +12,6 @@ namespace Seydu\DataGrid\Prezent\Grid\Type;
 use Prezent\Grid\BaseElementTypeExtension;
 use Prezent\Grid\ElementView;
 use Prezent\Grid\Extension\Core\Type\ColumnType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -54,15 +53,15 @@ class SortableTypeExtension extends BaseElementTypeExtension
     {
         $resolver
             ->setDefaults([
-                'sortable'              => false,
-                'sort_field'            => null,
-                'sort_route'            => null,
+                'sortable'  => false,
+                'sort_field' => null,
+                'sort_route'  => null,
                 'sort_route_parameters' => null,
-                'sort_field_parameter'  => $this->fieldParameter,
-                'sort_order_parameter'  => $this->orderParameter,
+                'sort_field_parameter' => $this->fieldParameter,
+                'sort_order_parameter' => $this->orderParameter,
 
-                'is_default_sort'            => false,
-                'default_sort_order'         => 'ASC',
+                'is_active_sort' => false,
+                'current_sort_order'  => null,
             ])
             ->setAllowedTypes('sortable', 'bool')
             ->setAllowedTypes('sort_field', ['null', 'string'])
@@ -70,30 +69,9 @@ class SortableTypeExtension extends BaseElementTypeExtension
             ->setAllowedTypes('sort_route_parameters', ['null', 'array'])
             ->setAllowedTypes('sort_field_parameter', 'string')
             ->setAllowedTypes('sort_order_parameter', 'string')
-            ->setAllowedTypes('is_default_sort', 'bool')
-            ->setAllowedTypes('default_sort_order', ['null', 'string'])
-            ->setAllowedValues('default_sort_order', [null, 'asc', 'desc', 'ASC', 'DESC'])
+            ->setAllowedTypes('is_active_sort', 'bool')
+            ->setAllowedValues('current_sort_order', [null, 'asc', 'desc', 'ASC', 'DESC'])
         ;
-    }
-
-    /**
-     * @internal
-     * @param Request $request
-     * @param array $options
-     * @param string $columnName
-     * @return array
-     */
-    private function processActiveColumn(Request $request, array $options, $columnName)
-    {
-        $sortColumn = $request->get($options['sort_field_parameter']);
-        $activeSortOrder = $request->get($options['sort_order_parameter'], 'ASC');
-        if(!$sortColumn && $options['is_default_sort']) {
-            $sortColumn = $columnName;
-            $activeSortOrder = $options['default_sort_order'];
-        }
-        $isActive = $columnName == $sortColumn;
-        $sortOrder = 'ASC' === $activeSortOrder ? 'DESC' : 'ASC';
-        return [$isActive, $sortOrder];
     }
 
     /**
@@ -101,19 +79,20 @@ class SortableTypeExtension extends BaseElementTypeExtension
      */
     public function buildView(ElementView $view, array $options)
     {
-        if (!$options['sortable'] || !($request = $this->requestStack->getCurrentRequest())) {
+        if (!$options['sortable']) {
             return;
         }
         $columnName = $view->name;
-        list($active, $order) = $this->processActiveColumn($request, $options, $columnName);
+        $active = $options['is_active_sort'];
+        $currentOrder = $options['current_sort_order'];
+        $order = 'ASC' === $currentOrder ? 'DESC' : 'ASC';
 
         $sortField = $options['sort_field'] ?: $columnName;
-        $routeParams = $options['sort_route_parameters'] ?: $request->attributes->get('_route_params', []);
-        $routeParams = array_merge($routeParams, $request->query->all());
+        $routeParams = $options['sort_route_parameters'];
         $routeParams[$options['sort_field_parameter']] = $sortField;
         $routeParams[$options['sort_order_parameter']] = $order;
 
-        $view->vars['sort_route'] = $options['sort_route'] ?: $request->attributes->get('_route');
+        $view->vars['sort_route'] = $options['sort_route'];
         $view->vars['sort_route_parameters'] = $routeParams;
         $view->vars['sort_active'] = $active;
         $view->vars['sort_order'] = $order;

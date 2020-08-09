@@ -36,6 +36,11 @@ class ListDefinition implements ListDefinitionInterface
      */
     private $sortRoute;
 
+    /**
+     * @var array|null
+     */
+    private $sortRouteParameters;
+
     public function __construct(array $columns=[], array $objectActions=[], array $options=[])
     {
         $this->columns = $columns;
@@ -43,6 +48,7 @@ class ListDefinition implements ListDefinitionInterface
         $this->options = $options;
         $this->sortColumn = '';
         $this->sortDirection = 'ASC';
+        $this->sortRouteParameters = [];
     }
 
     /**
@@ -120,8 +126,26 @@ class ListDefinition implements ListDefinitionInterface
         $this->sortRoute = $route;
         return $this;
     }
-    public function getSortRoute()
+    public function getSortRoute(): ?string
     {
         return $this->sortRoute;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getSortRouteParameters(): array
+    {
+        return $this->sortRouteParameters;
+    }
+
+    /**
+     * @param array $routeParameters
+     * @return self
+     */
+    public function setSortRouteParameters(array $routeParameters): self
+    {
+        $this->sortRouteParameters = $routeParameters;
+        return $this;
     }
 }
