@@ -84,8 +84,8 @@ class SortableTypeExtension extends BaseElementTypeExtension
         }
         $columnName = $view->name;
         $active = $options['is_active_sort'];
-        $currentOrder = $options['current_sort_order'];
-        $order = 'ASC' === $currentOrder ? 'DESC' : 'ASC';
+        $currentOrder = strtolower($options['current_sort_order']);
+        $order = 'asc' === $currentOrder ? 'desc' : 'asc';
 
         $sortField = $options['sort_field'] ?: $columnName;
         $routeParams = $options['sort_route_parameters'];
@@ -95,7 +95,7 @@ class SortableTypeExtension extends BaseElementTypeExtension
         $view->vars['sort_route'] = $options['sort_route'];
         $view->vars['sort_route_parameters'] = $routeParams;
         $view->vars['sort_active'] = $active;
-        $view->vars['sort_order'] = $order;
+        $view->vars['sort_order'] = $currentOrder;
     }
 
     public function getExtendedType()
