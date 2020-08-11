@@ -7,12 +7,12 @@ namespace Seydu\DataGrid;
 class ListBuilder implements ListBuilderInterface
 {
     /**
-     * @var GridBuilderInterface
+     * @var ListGridBuilderInterface
      */
     private $gridBuilder;
 
     public function __construct(
-        GridBuilderInterface $gridBuilder
+        ListGridBuilderInterface $gridBuilder
     )
     {
         $this->gridBuilder = $gridBuilder;

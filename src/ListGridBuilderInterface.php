@@ -4,7 +4,7 @@
 namespace Seydu\DataGrid;
 
 
-interface GridBuilderInterface
+interface ListGridBuilderInterface
 {
     public function build(ListDefinitionInterface $definition, array $options);
 }
