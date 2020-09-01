@@ -6,7 +6,7 @@ namespace Seydu\DataGrid;
 
 use Prezent\Grid\GridFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 
 class ShowBuilder implements ShowBuilderInterface
@@ -17,9 +17,9 @@ class ShowBuilder implements ShowBuilderInterface
     private $gridFactory;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
-    private $twigEngine;
+    private $twig;
 
     /**
      * @var UrlGeneratorInterface
@@ -34,17 +34,17 @@ class ShowBuilder implements ShowBuilderInterface
     /**
      * ShowBuilder constructor.
      * @param GridFactory $gridFactory
-     * @param EngineInterface $twigEngine
+     * @param Environment $twig
      * @param UrlGeneratorInterface $router
      */
     public function __construct(
         GridFactory $gridFactory,
-        EngineInterface $twigEngine,
+        Environment $twig,
         UrlGeneratorInterface $router
     )
     {
         $this->gridFactory = $gridFactory;
-        $this->twigEngine = $twigEngine;
+        $this->twig = $twig;
         $this->router = $router;
         $this->config = [];
     }
@@ -100,7 +100,7 @@ class ShowBuilder implements ShowBuilderInterface
             'metadata' => $this->getMetadata(),
         ];
         $template = $this->getTemplate();
-        $html = $this->twigEngine->render($template, $data);
+        $html = $this->twig->render($template, $data);
         return $html;
     }
 }
