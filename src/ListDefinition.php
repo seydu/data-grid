@@ -55,7 +55,7 @@ class ListDefinition implements ListDefinitionInterface
      * @param array $columns
      * @return self
      */
-    protected function setColumns(array $columns): self
+    public function setColumns(array $columns)
     {
         $this->columns = $columns;
         return $this;
@@ -65,7 +65,7 @@ class ListDefinition implements ListDefinitionInterface
      * @param array $objectActions
      * @return self
      */
-    protected function setObjectActions(array $objectActions): self
+    public function setObjectActions(array $objectActions)
     {
         $this->objectActions = $objectActions;
         return $this;
@@ -75,7 +75,7 @@ class ListDefinition implements ListDefinitionInterface
      * @param array $options
      * @return self
      */
-    protected function setOptions(array $options): self
+    public function setOptions(array $options)
     {
         $this->options = $options;
         return $this;
