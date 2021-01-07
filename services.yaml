@@ -1,0 +1,23 @@
+services:
+    Seydu\DataGrid\ListViewBuilderInterface:
+        alias: Seydu\DataGrid\ListViewBuilder
+
+    Seydu\DataGrid\ListViewBuilder:
+        public: true
+        shared: false
+
+    Seydu\DataGrid\GridViewBuilderInterface:
+        alias: Seydu\DataGrid\GridViewBuilder
+
+    Seydu\DataGrid\GridViewBuilder:
+        public: true
+        shared: false
+
+    Seydu\DataGrid\ListDefinitionProviderInterface:
+        alias: Seydu\DataGrid\ListDefinitionProvider
+
+    Seydu\DataGrid\ListDefinitionProvider:
+        arguments:
+            - '@Seydu\Security\ActionAuthorizationCheckerInterface'
+        public: true
+        shared: false
