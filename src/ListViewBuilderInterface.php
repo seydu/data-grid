@@ -7,8 +7,8 @@ namespace Seydu\DataGrid;
 interface ListViewBuilderInterface
 {
     /**
-     * @param iterable $data
+     * @param iterable $dataSet
      * @return iterable
      */
-    public function buildViews($data);
+    public function buildViews($dataSet);
 }
