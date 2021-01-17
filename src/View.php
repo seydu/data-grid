@@ -8,13 +8,13 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class View
 {
-    private $_entity;
+    private $_object;
     private $_data;
     private $_propertyPath;
 
-    public function __construct($entity, $data)
+    public function __construct($object, $data)
     {
-        $this->_entity = $entity;
+        $this->_object = $object;
         $this->_data = $data;
         $this->_propertyPath = PropertyAccess::createPropertyAccessor();
     }
@@ -24,6 +24,6 @@ class View
         if (array_key_exists($name, $this->_data)) {
             return $this->_data[$name];
         }
-        return $this->_propertyPath->getValue($this->_entity, $name);
+        return $this->_propertyPath->getValue($this->_object, $name);
     }
 }
