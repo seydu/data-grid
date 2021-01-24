@@ -11,9 +11,14 @@ abstract class AbstractListViewBuilder implements ListViewBuilderInterface
      */
     private $viewDataBuilder;
 
-    public function __construct(?ViewDataBuilderInterface $viewDataBuilder = null)
+    /**
+     * @param ViewDataBuilderInterface $viewDataBuilder
+     * @return $this
+     */
+    public function setViewDataBuilder(ViewDataBuilderInterface $viewDataBuilder)
     {
         $this->viewDataBuilder = $viewDataBuilder;
+        return $this;
     }
 
     /**

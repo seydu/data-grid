@@ -11,4 +11,10 @@ interface ListViewBuilderInterface
      * @return iterable
      */
     public function buildViews($dataSet);
+
+    /**
+     * @param ViewDataBuilderInterface $viewDataBuilder
+     * @return $this
+     */
+    public function setViewDataBuilder(ViewDataBuilderInterface $viewDataBuilder);
 }
