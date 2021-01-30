@@ -22,12 +22,12 @@ class ListArrayDataProvider implements ListDataProviderInterface
         return $this->data;
     }
 
-    public function getTotalSize()
+    public function getTotalSize(): int
     {
         return $this->totalSize;
     }
 
-    public function getDataSize()
+    public function getDataSize(): int
     {
         return $this->dataSize;
     }

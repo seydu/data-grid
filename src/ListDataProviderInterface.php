@@ -14,10 +14,10 @@ interface ListDataProviderInterface
     /**
      * @return int
      */
-    public function getTotalSize();
+    public function getTotalSize(): int;
 
     /**
      * @return int
      */
-    public function getDataSize();
+    public function getDataSize(): int;
 }
