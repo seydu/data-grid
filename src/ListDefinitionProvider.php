@@ -36,7 +36,7 @@ class ListDefinitionProvider implements ListDefinitionProviderInterface
         $filteredActions = [];
         foreach ($listDefinition->getObjectActions() as $name => $action) {
             if(isset($action['role'])) {
-                if ($this->actionAuthorizationChecker->isGrantedAction($name)) {
+                if ($this->actionAuthorizationChecker->isGrantedAction($name, $action)) {
                     unset($action['role']);
                     $filteredActions[$name] = $action;
                 }
