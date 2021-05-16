@@ -4,6 +4,8 @@
 namespace Seydu\DataGrid;
 
 
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 class ListDefinition implements ListDefinitionInterface
 {
     /**
@@ -41,14 +43,38 @@ class ListDefinition implements ListDefinitionInterface
      */
     private $sortRouteParameters;
 
-    public function __construct(array $columns=[], array $objectActions=[], array $options=[])
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    public function __construct(
+        //TranslatorInterface $translator = null,
+        array $columns = [],
+        array $objectActions = [],
+        array $options = []
+    )
     {
+        //$this->translator = $translator;
         $this->columns = $columns;
         $this->objectActions = $objectActions;
         $this->options = $options;
         $this->sortColumn = '';
         $this->sortDirection = 'ASC';
         $this->sortRouteParameters = [];
+        $this->initialize();
+        $this->initializeSortDefinition();
+    }
+
+    protected function initializeSortDefinition()
+    {
+
+    }
+
+    protected function initialize()
+    {
+        $this->columns = $this->loadColumns();
+        $this->objectActions = $this->loadObjectActions();
     }
 
     /**
