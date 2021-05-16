@@ -49,13 +49,13 @@ class ListDefinition implements ListDefinitionInterface
     protected $translator;
 
     public function __construct(
-        //TranslatorInterface $translator = null,
+        TranslatorInterface $translator = null,
         array $columns = [],
         array $objectActions = [],
         array $options = []
     )
     {
-        //$this->translator = $translator;
+        $this->translator = $translator;
         $this->columns = $columns;
         $this->objectActions = $objectActions;
         $this->options = $options;

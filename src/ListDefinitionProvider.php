@@ -5,13 +5,20 @@ namespace Seydu\DataGrid;
 
 
 use Seydu\Security\ActionAuthorizationCheckerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListDefinitionProvider implements ListDefinitionProviderInterface
 {
     private $actionAuthorizationChecker;
-    public function __construct(ActionAuthorizationCheckerInterface $actionAuthorizationChecker)
+    private $translator;
+
+    public function __construct(
+        ActionAuthorizationCheckerInterface $actionAuthorizationChecker,
+        TranslatorInterface $translator
+    )
     {
         $this->actionAuthorizationChecker = $actionAuthorizationChecker;
+        $this->translator = $translator;
     }
 
     private function findByClass($class)
@@ -19,7 +26,7 @@ class ListDefinitionProvider implements ListDefinitionProviderInterface
         if(!class_exists($class)) {
             return null;
         }
-        $listDefinition = new $class();
+        $listDefinition = new $class($this->translator);
         if(!$listDefinition instanceof ListDefinitionInterface) {
             throw new \LogicException("No list definition found because class '$class' is not allowed");
         }
@@ -28,7 +35,7 @@ class ListDefinitionProvider implements ListDefinitionProviderInterface
 
     public function withActionAuthorizationChecker(ActionAuthorizationCheckerInterface $actionAuthorizationChecker)
     {
-        return new self($actionAuthorizationChecker);
+        return new self($actionAuthorizationChecker, $this->translator);
     }
 
     private function filterObjectActions(ListDefinitionInterface $listDefinition)
