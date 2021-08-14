@@ -10,21 +10,24 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ListDefinitionProvider implements ListDefinitionProviderInterface
 {
     private $actionAuthorizationChecker;
+    private $listDefinitionCollection;
     private $translator;
 
     public function __construct(
         ActionAuthorizationCheckerInterface $actionAuthorizationChecker,
+        ListDefinitionCollection $listDefinitionCollection,
         TranslatorInterface $translator
     )
     {
         $this->actionAuthorizationChecker = $actionAuthorizationChecker;
+        $this->listDefinitionCollection = $listDefinitionCollection;
         $this->translator = $translator;
     }
 
-    private function findByClass($class)
+    private function create($class): ListDefinitionInterface
     {
-        if(!class_exists($class)) {
-            return null;
+        if(!\class_exists($class)) {
+            throw new \LogicException("List definition class '$class' does not exist");
         }
         $listDefinition = new $class($this->translator);
         if(!$listDefinition instanceof ListDefinitionInterface) {
@@ -33,9 +36,14 @@ class ListDefinitionProvider implements ListDefinitionProviderInterface
         return $listDefinition;
     }
 
+    private function findByClass($class): ListDefinitionInterface
+    {
+        return $this->listDefinitionCollection->get($class) ?: $this->create($class);
+    }
+
     public function withActionAuthorizationChecker(ActionAuthorizationCheckerInterface $actionAuthorizationChecker)
     {
-        return new self($actionAuthorizationChecker, $this->translator);
+        return new self($actionAuthorizationChecker, $this->listDefinitionCollection, $this->translator);
     }
 
     private function filterObjectActions(ListDefinitionInterface $listDefinition)
@@ -54,6 +62,7 @@ class ListDefinitionProvider implements ListDefinitionProviderInterface
         $listDefinition->setObjectActions($filteredActions);
         return $listDefinition;
     }
+
     public function load($class)
     {
         $listDefinition = $this->findByClass($class);
