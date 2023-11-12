@@ -6,6 +6,7 @@ namespace Seydu\DataGrid;
 
 interface ListDefinitionInterface
 {
+    public function initialize();
     public function getColumns();
     public function setColumns(array $columns);
 
