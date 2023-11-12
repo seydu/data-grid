@@ -69,8 +69,8 @@ abstract class AbstractListDefinition implements ListDefinitionInterface
         $this->sortRouteParameters = [];
     }
 
-    abstract protected function loadColumns();
-    abstract protected function loadObjectActions();
+    abstract protected function loadColumns(): array;
+    abstract protected function loadObjectActions(): array;
 
 
     protected function initializeSortDefinition()
