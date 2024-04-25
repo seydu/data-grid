@@ -7,12 +7,12 @@ namespace Seydu\DataGrid;
 class ListDefinition extends AbstractListDefinition
 {
 
-    protected function loadColumns()
+    protected function loadColumns(): array
     {
         return [];
     }
 
-    protected function loadObjectActions()
+    protected function loadObjectActions(): array
     {
         return [];
     }

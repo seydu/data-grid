@@ -21,6 +21,11 @@ abstract class AbstractListViewBuilder implements ListViewBuilderInterface
         return $this;
     }
 
+    protected function createView($object, array $data)
+    {
+        return new View($object, $data);
+    }
+
     /**
      * @param iterable $dataSet
      * @return array|\ArrayAccess
@@ -29,7 +34,7 @@ abstract class AbstractListViewBuilder implements ListViewBuilderInterface
     {
         $results = [];
         foreach ($dataSet as $object) {
-            $results[] = new View($object, $this->buildData($object));
+            $results[] = $this->createView($object, $this->buildData($object));
         }
         return $results;
     }

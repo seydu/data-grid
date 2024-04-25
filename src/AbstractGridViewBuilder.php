@@ -20,10 +20,14 @@ abstract class AbstractGridViewBuilder implements GridViewBuilderInterface
         $this->viewDataBuilder = $viewDataBuilder;
         return $this;
     }
+    protected function createView($object, array $data)
+    {
+        return new View($object, $data);
+    }
 
     public function build($object)
     {
-        return new View($object, $this->buildData($object));
+        return $this->createView($object, $this->buildData($object));
     }
 
     /**
