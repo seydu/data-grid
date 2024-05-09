@@ -3,6 +3,7 @@
 
 namespace Seydu\DataGrid;
 
+use Seydu\DataProvider\ListDataProviderInterface;
 
 interface ListBuilderInterface
 {

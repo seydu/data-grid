@@ -4,6 +4,8 @@
 namespace Seydu\DataGrid;
 
 
+use Seydu\DataProvider\ListDataProviderInterface;
+
 class ListBuilder implements ListBuilderInterface
 {
     /**
